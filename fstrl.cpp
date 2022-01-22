@@ -1,62 +1,37 @@
-#if _MATH_H
 #include<cmath>
-#endif
-#if _IOSTREAM
 #include<iostream>
-#endif
+#include "fstrl.h"
 using namespace std;
-class Grid
-{
-	bool vh[100][100];
-	public:
-	Grid()
+Grid::Grid()
 	{
-		for(int v=0;v<100;v++)
+		for(int v=0;v<21;v++)
 		{
-			for(int h=0;h<100;h++)
+			for(int h=0;h<21;h++)
 			{
 				vh[v][h]=false;
 			}
 		}
 	}
-	void change(int h,int v)
+	void Grid::change(int h,int v)
 	{
 		vh[v][h]=true;
 	}
-	void print()
+	void Grid::print()
 	{
-		cout<<"  ";
-		for(int i=0;i<100;i++)
-		{
-			if(i<10)cout<<" "<<i;
-			else cout<<i;
-		}
 		cout<<endl;
-		for(int v=0;v<100;v++)
+		for(int v=0;v<21;v++)
 		{
 			if(v<10)cout<<" "<<v;
-			else cout<<v;
-			for(int h=0;h<100;h++)
+			else cout<<" |";
+			for(int h=0;h<21;h++)
 			{
-				if(vh[v][h]==false)cout<<"| ";
+				if(vh[v][h]==false)cout<<"  ";
 				else cout<<"$$";
 			}
 			cout<<endl;
 		}
 	}
-	//file operations
-};
-class Line
-{
-	Grid *G;
-	double v1;
-	double h1;
-	double v2;
-	double h2;
-	double tanang;
-	int vertical=0;
-	public:
-	void setpoints(int v1,int h1,int v2,int h2)
+	void Line::setpoints(int v1,int h1,int v2,int h2)
 	{
 		vertical=0;
 		this->h1=h1;
@@ -65,11 +40,11 @@ class Line
 		this->v2=v2;
 		tanangle();
 	}
-	void setGrid(Grid *G)
+	void Line::setGrid(Grid *G)
 	{
 		this->G=G;
 	}
-	void tanangle()
+	void Line::tanangle()
 	{
 		int ab;
 		int ca;
@@ -79,7 +54,7 @@ class Line
 		else tanang=ab/ca;
 		cout<<endl<<"ca, ab:"<<ca<<", "<<ab<<"/t"<<"tan:"<<tanang<<endl;
 	}
-	void draw()
+	void Line::draw()
 	{
 		int sign=1;
 		if(h1>h2) sign=-1;
@@ -96,5 +71,4 @@ class Line
 			}
 		}
 	}
-};
 
