@@ -21,7 +21,7 @@ Grid::Grid()
 		cout<<endl;
 		for(int v=0;v<21;v++)
 		{
-			if(v<10)cout<<" "<<v;
+			if(v<10)cout<<" |";
 			else cout<<" |";
 			for(int h=0;h<21;h++)
 			{
