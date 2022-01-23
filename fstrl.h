@@ -7,6 +7,7 @@ class Grid
 	Grid();
 	void change(int h,int v);
 	void print();
+	void restore();
 };
 class Line
 {

@@ -4,6 +4,14 @@
 using namespace std;
 Grid::Grid()
 	{
+		restore();
+	}
+	void Grid::change(int h,int v)
+	{
+		vh[v][h]=true;
+	}
+	void Grid::restore()
+	{
 		for(int v=0;v<21;v++)
 		{
 			for(int h=0;h<21;h++)
@@ -11,10 +19,7 @@ Grid::Grid()
 				vh[v][h]=false;
 			}
 		}
-	}
-	void Grid::change(int h,int v)
-	{
-		vh[v][h]=true;
+
 	}
 	void Grid::print()
 	{
@@ -60,12 +65,12 @@ Grid::Grid()
 		if(h1>h2) sign=-1;
 		if(vertical==1)
 		{
-			for(int i=0; i+v1<v2; i+=sign)
+			for(int i=0; i+v1<=v2; i+=sign)
 				G->change((int)round(v1+i), (int)round(h1));
 		}
 		else
 		{
-			for(int i=0; i+h1<h2; i+=sign)
+			for(int i=0; i+h1<=h2; i+=sign)
 			{
 				G->change((int)round(v1+i*tanang), (int)round(h1+i));
 			}
