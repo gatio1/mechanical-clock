@@ -16,22 +16,12 @@
 {
 
 }*/
-void toPoints(strict tm* timeinfo, time_t rawtime, int **hr_min_sec)
-{
-	time ( &rawtime );
-	timeinfo = localtime ( &rawtime );
-	hr_min_sec[0][0]=10+(int)(Hours*sin((24/(double)timeinfo->tm_hour)*2*PI));
-	hr_min_sec[0][1]=10-(int)(Hours*cos((24/timeinfo->tm_hour)*2*PI));
-	hr_min_sec[1][0]=10+(int)(Minutes*sin((60/timeinfo->tm_min)*2*PI));
-	hr_min_sec[1][1]=10-(int)(Minutes*cos((60/timeinfo->tm_min)*2*PI));
-	hr_min_sec[2][0]=10+(int)(Seconds*sin((60/timeinfo->tm_sec)*2*PI));
-	hr_min_sec[2][1]=10-(int)(Seconds*cos((60/timeinfo->tm_sec)*2*PI));
-}
+void toPoints(struct tm* timeinfo, time_t rawtime, int **hr_min_sec);
 int main()
 {
 	int center[2]={10, 10};
 	time_t rawtime;
-	struct *tm timeinfo;
+	struct tm *timeinfo;
 	int **hr_min_sec=new int*[3];
 	for(int i=0; i<3; i++)
 	{
@@ -65,5 +55,26 @@ int main()
 	delete G;
 	delete H, M, S;
   return 0;
+}
+void toPoints(struct tm* timeinfo, time_t rawtime, int **hr_min_sec)
+{
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+	int hr;
+	if(timeinfo->tm_hour<12) hr=timeinfo->tm_hour;
+	else hr=timeinfo->tm_hour-12;
+	std::cout<<"\nhr: "<<hr;
+	hr_min_sec[0][0]=10+(int)(Hours*sin((12/(double)timeinfo->tm_hour)*2*PI));
+	hr_min_sec[0][1]=10-(int)(Hours*cos((12/timeinfo->tm_hour)*2*PI));
+	hr_min_sec[1][0]=10+(int)(Minutes*sin((60/timeinfo->tm_min)*2*PI));
+	hr_min_sec[1][1]=10-(int)(Minutes*cos((60/timeinfo->tm_min)*2*PI));
+	hr_min_sec[2][0]=10+(int)(Seconds*sin((60/timeinfo->tm_sec)*2*PI));
+	hr_min_sec[2][1]=10-(int)(Seconds*cos((60/timeinfo->tm_sec)*2*PI));
+	std::cout<<std::endl;
+	for(int k=0; k<3; k++)
+	{
+		for(int p=0; p<2; p++) std::cout<<hr_min_sec[k][p]<<", ";
+	}
+	std::cout<<std::endl;
 }
 

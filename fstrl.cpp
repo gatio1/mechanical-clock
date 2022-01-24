@@ -30,7 +30,7 @@ Grid::Grid()
 			else cout<<" |";
 			for(int h=0;h<21;h++)
 			{
-				if(vh[v][h]==false)cout<<"  ";
+				if(vh[v][h]==false)cout<<"[]";
 				else cout<<"$$";
 			}
 			cout<<endl;
