@@ -26,11 +26,11 @@ Grid::Grid()
 		cout<<endl;
 		for(int v=0;v<21;v++)
 		{
-			if(v<10)cout<<" |";
+			if(v<10)cout<<" [";
 			else cout<<" |";
 			for(int h=0;h<21;h++)
 			{
-				if(vh[v][h]==false)cout<<"[]";
+				if(vh[v][h]==false)cout<<"  ";
 				else cout<<"$$";
 			}
 			cout<<endl;
@@ -56,7 +56,7 @@ Grid::Grid()
 		ab=v1-v2;
 		ca=h1-h2;
 		if((ca<1&&ca>=0)||(ca>-1&&ca<0)) vertical=1; 
-		else tanang=ab/ca;
+		else tanang=(double)ab/(double)ca;
 		cout<<endl<<"ca, ab:"<<ca<<", "<<ab<<"/t"<<"tan:"<<tanang<<endl;
 	}
 	void Line::draw()
@@ -66,13 +66,13 @@ Grid::Grid()
 		if(vertical==1)
 		{
 			for(int i=0; i+v1<=v2; i+=sign)
-				G->change((int)round(v1+i), (int)round(h1));
+				G->change(round(v1+i), round(h1));
 		}
 		else
 		{
-			for(int i=0; i+h1<=h2; i+=sign)
+			for(int i=0; i+h1!=h2; i+=sign)
 			{
-				G->change((int)round(v1+i*tanang), (int)round(h1+i));
+				G->change(round(v1+i*tanang), round(h1+i));
 			}
 		}
 	}

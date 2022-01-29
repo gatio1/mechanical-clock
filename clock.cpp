@@ -8,7 +8,7 @@
 #else
 #include <unistd.h>
 #endif
-#define Minutes 9
+#define Minutes 8
 #define Seconds 10
 #define Hours 6
 #define PI 3.14159265
@@ -22,6 +22,7 @@ int main()
 	int center[2]={10, 10};
 	time_t rawtime;
 	struct tm *timeinfo;
+	char c='n';
 	int **hr_min_sec=new int*[3];
 	for(int i=0; i<3; i++)
 	{
@@ -45,7 +46,8 @@ int main()
 		S->draw();
 		G->print();
 		G->restore();
-		sleep(1000);
+		sleep(1);
+		std::cout<<"finished";
 	}
 	for(int i=0; i<3; i++)
 	{
@@ -63,13 +65,13 @@ void toPoints(struct tm* timeinfo, time_t rawtime, int **hr_min_sec)
 	int hr;
 	if(timeinfo->tm_hour<12) hr=timeinfo->tm_hour;
 	else hr=timeinfo->tm_hour-12;
-	std::cout<<"\nhr: "<<hr;
-	hr_min_sec[0][0]=10+(int)(Hours*sin((12/(double)timeinfo->tm_hour)*2*PI));
-	hr_min_sec[0][1]=10-(int)(Hours*cos((12/timeinfo->tm_hour)*2*PI));
-	hr_min_sec[1][0]=10+(int)(Minutes*sin((60/timeinfo->tm_min)*2*PI));
-	hr_min_sec[1][1]=10-(int)(Minutes*cos((60/timeinfo->tm_min)*2*PI));
-	hr_min_sec[2][0]=10+(int)(Seconds*sin((60/timeinfo->tm_sec)*2*PI));
-	hr_min_sec[2][1]=10-(int)(Seconds*cos((60/timeinfo->tm_sec)*2*PI));
+	std::cout<<"\nhr: "<<hr<<", min: "<<timeinfo->tm_min<<", sec: "<<timeinfo->tm_sec;
+	hr_min_sec[0][0]=10-round((Hours*cos((((double)timeinfo->tm_hour+1)/12)*2*PI)));
+	hr_min_sec[0][1]=10+round((Hours*sin((((double)timeinfo->tm_hour+1)/12)*2*PI)));
+	hr_min_sec[1][0]=10-round((Minutes*cos((((double)timeinfo->tm_min)/60)*2*PI)));
+	hr_min_sec[1][1]=10+round((Minutes*sin((((double)timeinfo->tm_min)/60)*2*PI)));
+	hr_min_sec[2][0]=10-round((Seconds*cos((((double)timeinfo->tm_sec)/60)*2*PI)));
+	hr_min_sec[2][1]=10+round((Seconds*sin((((double)timeinfo->tm_sec)/60)*2*PI)));
 	std::cout<<std::endl;
 	for(int k=0; k<3; k++)
 	{
