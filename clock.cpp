@@ -66,8 +66,8 @@ void toPoints(struct tm* timeinfo, time_t rawtime, int **hr_min_sec)
 	if(timeinfo->tm_hour<12) hr=timeinfo->tm_hour;
 	else hr=timeinfo->tm_hour-12;
 	std::cout<<"\nhr: "<<hr<<", min: "<<timeinfo->tm_min<<", sec: "<<timeinfo->tm_sec;
-	hr_min_sec[0][0]=10-round((Hours*cos((((double)timeinfo->tm_hour+1)/12)*2*PI)));
-	hr_min_sec[0][1]=10+round((Hours*sin((((double)timeinfo->tm_hour+1)/12)*2*PI)));
+	hr_min_sec[0][0]=10-round((Hours*cos((((double)timeinfo->tm_hour)/12)*2*PI)));
+	hr_min_sec[0][1]=10+round((Hours*sin((((double)timeinfo->tm_hour)/12)*2*PI)));
 	hr_min_sec[1][0]=10-round((Minutes*cos((((double)timeinfo->tm_min)/60)*2*PI)));
 	hr_min_sec[1][1]=10+round((Minutes*sin((((double)timeinfo->tm_min)/60)*2*PI)));
 	hr_min_sec[2][0]=10-round((Seconds*cos((((double)timeinfo->tm_sec)/60)*2*PI)));

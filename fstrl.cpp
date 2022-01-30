@@ -39,6 +39,7 @@ Grid::Grid()
 	void Line::setpoints(int v1,int h1,int v2,int h2)
 	{
 		vertical=0;
+		horizontal=0;
 		this->h1=h1;
 		this->v1=v1;
 		this->h2=h2;
@@ -55,25 +56,45 @@ Grid::Grid()
 		int ca;
 		ab=v1-v2;
 		ca=h1-h2;
-		if((ca<1&&ca>=0)||(ca>-1&&ca<0)) vertical=1; 
+		if((ca<1)&&(ca>-1)) horizontal=1;
+	     	if((ab<1)&&(ab>-1)) vertical=1; 	
 		else tanang=(double)ab/(double)ca;
 		cout<<endl<<"ca, ab:"<<ca<<", "<<ab<<"/t"<<"tan:"<<tanang<<endl;
 	}
 	void Line::draw()
 	{
-		int sign=1;
-		if(h1>h2) sign=-1;
+		int signh=1;
+		int signv=1;
+		int flag=0;
+		if(h1>h2) signh=-1;
+		if(v1>v2) signv=-1;
 		if(vertical==1)
 		{
-			for(int i=0; i+v1<=v2; i+=sign)
-				G->change(round(v1+i), round(h1));
+			/*for(int i=0; i+v1>=v2; i+=signh)
+			G->change(round(v1+i), round(h1));*/
+			flag=1;
 		}
-		else
+		if(horizontal==1)
 		{
-			for(int i=0; i+h1!=h2; i+=sign)
+			/*for(int i=0; i+h1!=h2; i+=signv)
+			G->change(round(v1), round(h1+i));*/
+			flag=2;
+		}
+
+		if(flag!=2)
+		{
+			for(int i=0; i+h1!=h2; i+=signh)
 			{
 				G->change(round(v1+i*tanang), round(h1+i));
 			}
 		}
+		if(flag!=1)
+		{
+			for(int i=0; i+v1!=v2; i+=signv)
+			{
+				G->change(round(v1+i), round(h1+i/tanang));
+			}
+		}
 	}
+
 

@@ -18,6 +18,7 @@ class Line
 	double h2;
 	double tanang;
 	int vertical=0;
+	int horizontal=0;
 	public:
 	void setpoints(int v1,int h1,int v2,int h2);
 	void setGrid(Grid *G);
