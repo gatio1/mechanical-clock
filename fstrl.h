@@ -24,6 +24,5 @@ class Line
 	void setGrid(Grid *G);
 	void tanangle();
 	void draw();
-
 };
 #endif
