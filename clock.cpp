@@ -12,17 +12,28 @@
 #define Seconds 10
 #define Hours 6
 #define PI 3.14159265
-/*class Time
+void Clear()// A function to clear everything printed so far on the screen
 {
+#if defined _WIN32
+    system("cls");
+    //clrscr(); // including header file : conio.h
+#elif defined (__LINUX__) || defined(__gnu_linux__) || defined(__linux__)
+    system("clear");
+    //std::cout<< u8"\033[2J\033[1;1H"; //Using ANSI Escape Sequences
+#elif defined (__APPLE__)
+    system("clear");
+#endif
+}
 
-}*/
 void toPoints(struct tm* timeinfo, time_t rawtime, int **hr_min_sec);
 int main()
 {
 	int center[2]={10, 10};
 	time_t rawtime;
 	struct tm *timeinfo;
-	char c='n';
+	int a=0;
+	time_t start_time;
+	int time_duration;
 	int **hr_min_sec=new int*[3];
 	for(int i=0; i<3; i++)
 	{
@@ -35,8 +46,13 @@ int main()
 	S->setGrid(G);
 	M->setGrid(G);
 	H->setGrid(G);
-	while(true)
+	std::cout<<"How long do you want it to run?(seconds)"<<std::endl;
+	std::cin>>time_duration;
+	time(&start_time);
+	time(&rawtime);
+	while((int)difftime(rawtime, start_time)<time_duration)
 	{
+		Clear();
 		toPoints(timeinfo, rawtime, hr_min_sec);
 		H->setpoints(center[0], center[1], hr_min_sec[0][1], hr_min_sec[0][0]);
 		M->setpoints(center[0], center[1], hr_min_sec[1][1], hr_min_sec[1][0]);
@@ -47,7 +63,7 @@ int main()
 		G->print();
 		G->restore();
 		sleep(1);
-		std::cout<<"finished";
+		time(&rawtime);
 	}
 	for(int i=0; i<3; i++)
 	{
@@ -65,18 +81,11 @@ void toPoints(struct tm* timeinfo, time_t rawtime, int **hr_min_sec)
 	int hr;
 	if(timeinfo->tm_hour<12) hr=timeinfo->tm_hour;
 	else hr=timeinfo->tm_hour-12;
-	std::cout<<"\nhr: "<<hr<<", min: "<<timeinfo->tm_min<<", sec: "<<timeinfo->tm_sec;
-	hr_min_sec[0][0]=10-round((Hours*cos((((double)timeinfo->tm_hour)/12)*2*PI)));
-	hr_min_sec[0][1]=10+round((Hours*sin((((double)timeinfo->tm_hour)/12)*2*PI)));
+	hr_min_sec[0][0]=10-round((Hours*cos(((((double)hr)/12)+((((double)timeinfo->tm_min)/60)/12))*2*PI)));
+	hr_min_sec[0][1]=10+round((Hours*sin(((((double)hr)/12)+((((double)timeinfo->tm_min)/60)/12))*2*PI)));
 	hr_min_sec[1][0]=10-round((Minutes*cos((((double)timeinfo->tm_min)/60)*2*PI)));
 	hr_min_sec[1][1]=10+round((Minutes*sin((((double)timeinfo->tm_min)/60)*2*PI)));
 	hr_min_sec[2][0]=10-round((Seconds*cos((((double)timeinfo->tm_sec)/60)*2*PI)));
 	hr_min_sec[2][1]=10+round((Seconds*sin((((double)timeinfo->tm_sec)/60)*2*PI)));
-	std::cout<<std::endl;
-	for(int k=0; k<3; k++)
-	{
-		for(int p=0; p<2; p++) std::cout<<hr_min_sec[k][p]<<", ";
-	}
-	std::cout<<std::endl;
 }
 

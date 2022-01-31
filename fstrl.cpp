@@ -30,8 +30,11 @@ Grid::Grid()
 			else cout<<" |";
 			for(int h=0;h<21;h++)
 			{
-				if(vh[v][h]==false)cout<<"  ";
-				else cout<<"$$";
+				if(v==h&&h==10)printf("\x1B[31m$$\033[0m");
+				else{
+					if(vh[v][h]==false)cout<<"  ";
+					else cout<<"$$";
+				}
 			}
 			cout<<endl;
 		}
@@ -59,7 +62,6 @@ Grid::Grid()
 		if((ca<1)&&(ca>-1)) horizontal=1;
 	     	if((ab<1)&&(ab>-1)) vertical=1; 	
 		else tanang=(double)ab/(double)ca;
-		cout<<endl<<"ca, ab:"<<ca<<", "<<ab<<"/t"<<"tan:"<<tanang<<endl;
 	}
 	void Line::draw()
 	{
@@ -70,14 +72,10 @@ Grid::Grid()
 		if(v1>v2) signv=-1;
 		if(vertical==1)
 		{
-			/*for(int i=0; i+v1>=v2; i+=signh)
-			G->change(round(v1+i), round(h1));*/
 			flag=1;
 		}
 		if(horizontal==1)
 		{
-			/*for(int i=0; i+h1!=h2; i+=signv)
-			G->change(round(v1), round(h1+i));*/
 			flag=2;
 		}
 
